@@ -82,8 +82,3 @@ The solver statistics show how puzzle difficulty affects search complexity:
 - high calls/failures: puzzle needed deeper search
 
 This makes the project useful both as a solver and as an AI/CSP learning demo.
-
-## Notes
-
-- Script filename is `Sudoko.py` to match the current repository files.
-- There is a 2-second delay between puzzles for readable console output.
