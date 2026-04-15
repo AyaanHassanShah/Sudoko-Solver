@@ -1,64 +1,89 @@
-# Sudoko-Solver
+# Sudoku Solver (CSP + AC-3)
 
-A Python Sudoku solver that combines:
-
-A Python Sudoku solver that combines:
+Solve Sudoku puzzles using classic AI techniques from Constraint Satisfaction Problems (CSP):
 
 - AC-3 constraint propagation
-- Forward checking
 - Backtracking search
-- MRV (Minimum Remaining Values) variable ordering
+- Forward checking
+- MRV (Minimum Remaining Values) variable selection
 
-It solves multiple boards in sequence and includes a short delay between boards so results are easier to read.
+This project solves multiple puzzle files in one run and reports search stats, so you can compare puzzle difficulty by actual solver effort.
+
+## Why This Project Is Interesting
+
+Instead of brute force, this solver uses reasoning:
+
+- AC-3 reduces domains early by enforcing arc consistency.
+- Forward checking catches dead-ends quickly after each assignment.
+- MRV chooses the most constrained variable first to shrink the search tree.
+
+Together, these techniques make the solver much smarter than plain backtracking.
 
 ## Project Structure
 
+```text
 23F-0711-AI-05/
-
-- src/
-  - Sudoko.py
-- puzzles/
-  - easy.txt
-  - medium.txt
-  - hard.txt
-  - veryhard.txt
-- README.md
-- .gitignore
+|-- src/
+|   `-- Sudoko.py
+|-- puzzles/
+|   |-- easy.txt
+|   |-- medium.txt
+|   |-- hard.txt
+|   `-- veryhard.txt
+|-- README.md
+`-- .gitignore
+```
 
 ## Requirements
 
 - Python 3.8+
-- No external packages required
+- No external dependencies
 
-## Input Format
+## Puzzle Input Format
 
-Each puzzle file must contain exactly 9 lines, each line with 9 digits.
-Use 0 for empty cells.
+Each puzzle file must follow this exact format:
 
-Example line:
-530070000
+- Exactly 9 lines
+- Each line has exactly 9 digits (`0-9`)
+- `0` means an empty cell
 
-## Run
+Example row:
 
-From the repository root:
+```text
+004030050
+```
 
+## Run the Solver
+
+From the project root:
+
+```bash
 python src/Sudoko.py
+```
 
-The script will solve:
+The program reads and solves:
 
 - easy.txt
 - medium.txt
 - hard.txt
 - veryhard.txt
 
-from the puzzles folder and print:
+For each puzzle, it prints:
 
-- solved board
-- backtrack calls
-- failures
+- solved grid (if solvable)
+- number of backtrack calls
+- number of backtrack failures
+
+## What You Can Learn From Output
+
+The solver statistics show how puzzle difficulty affects search complexity:
+
+- low calls/failures: puzzle was heavily reduced by constraints
+- high calls/failures: puzzle needed deeper search
+
+This makes the project useful both as a solver and as an AI/CSP learning demo.
 
 ## Notes
 
-- File name is currently Sudoko.py to match your original file.
-- You can rename it to Sudoku.py later if you want a spelling cleanup.
-- Delay between boards is currently 2 seconds.
+- Script filename is `Sudoko.py` to match the current repository files.
+- There is a 2-second delay between puzzles for readable console output.
